@@ -8,7 +8,6 @@ def fetch_bird_calls_from_xenocanto():
         data = response.json()
         return data['recordings']
     except requests.RequestException as e:
-        # Handle any kind of request exception (timeout, connectivity, etc.)
         print(f"Error fetching data from xeno-canto: {e}")
         return []
 
