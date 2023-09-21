@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Details for {{ bird.en }}</h2>
+    <p>ID: {{ bird.catalogue_number }}</p>
+    <p>Gen: {{ bird.gen }}</p>
+    <p>Sp: {{ bird.sp }}</p>
+    <p>Ssp: {{ bird.ssp }}</p>
+    <p>Group: {{ bird.group }}</p>
+    <p>English Name: {{ bird.en }}</p>
+    <p>Recordist: {{ bird.rec }}</p>
+    <p>Country: {{ bird.cnt }}</p>
+    <p>Location: {{ bird.loc }}</p>
+    <p>Latitude: {{ bird.lat }}</p>
+    <p>Longitude: {{ bird.lng }}</p>
+    <p>Sound Type: {{ bird.sound_type }}</p>
+    <p>Sex: {{ bird.sex }}</p>
+    <p>Life Stage: {{ bird.stage }}</p>
+    {% if bird.image %}
+        <img src="{{ bird.image.url }}" alt="{{ bird.en }}">
+    {% else %}
+        <p>No image available</p>
+    {% endif %}
+    <audio controls>
+        <source src="{{ bird.audio.url }}" type="audio/wav">
+    </audio>
+    <!-- Add the edit and delete links here when you're ready -->
+{% endblock %}

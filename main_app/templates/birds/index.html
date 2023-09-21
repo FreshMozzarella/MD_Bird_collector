@@ -1,15 +1,20 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<h1>TEST</h1>
-{% for recording in recordings %}
+{% for bird in birds %}
     <div>
-        {% if recording.image_url %}
-            <img src="{{ recording.image_url }}" alt="{{ recording.en }}">
+        <h2><a href="{% url 'bird_detail' bird_id=bird.id %}">{{ bird.en }}</a></h2>
+        <p>Gen: {{ bird.gen }}</p>
+        <p>Sp: {{ bird.sp }}</p>
+        ...
+        <!-- Add other fields as needed -->
+        {% if bird.image %}
+            <img src="{{ bird.image.url }}" alt="{{ bird.en }}">
+        {% else %}
+            <p>No image available</p>
         {% endif %}
-        <p>Species: {{ recording.en }}</p>
         <audio controls>
-            <source src="{{ recording.file }}" type="audio/mp3">
-            Your browser does not support the audio element.
+            <source src="{{ bird.audio.url }}" type="audio/wav">
         </audio>
     </div>
 {% endfor %}
