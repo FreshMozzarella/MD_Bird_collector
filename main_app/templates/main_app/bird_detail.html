@@ -1,28 +1,64 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2>Details for {{ bird.en }}</h2>
-    <p>ID: {{ bird.catalogue_number }}</p>
-    <p>Gen: {{ bird.gen }}</p>
-    <p>Sp: {{ bird.sp }}</p>
-    <p>Ssp: {{ bird.ssp }}</p>
-    <p>Group: {{ bird.group }}</p>
-    <p>English Name: {{ bird.en }}</p>
-    <p>Recordist: {{ bird.rec }}</p>
-    <p>Country: {{ bird.cnt }}</p>
-    <p>Location: {{ bird.loc }}</p>
-    <p>Latitude: {{ bird.lat }}</p>
-    <p>Longitude: {{ bird.lng }}</p>
-    <p>Sound Type: {{ bird.sound_type }}</p>
-    <p>Sex: {{ bird.sex }}</p>
-    <p>Life Stage: {{ bird.stage }}</p>
-    {% if bird.image %}
-        <img src="{{ bird.image.url }}" alt="{{ bird.en }}">
-    {% else %}
-        <p>No image available</p>
-    {% endif %}
-    <audio controls>
-        <source src="{{ bird.audio.url }}" type="audio/wav">
-    </audio>
-    <!-- Add the edit and delete links here when you're ready -->
+    <h2 class="center-align">Details for {{ bird.en }}</h2>
+
+    <div class="container">
+        <div class="row">
+            <div class="col s5"><strong>ID:</strong></div>
+            <div class="col s7">{{ bird.catalogue_number|default:"Not available" }}</div>
+
+            <div class="col s5"><strong>Gen:</strong></div>
+            <div class="col s7">{{ bird.gen|default:"Not available" }}</div>
+
+            <div class="col s5"><strong>Sp:</strong></div>
+            <div class="col s7">{{ bird.sp|default:"Not available" }}</div>
+
+            <div class="col s5"><strong>Ssp:</strong></div>
+            <div class="col s7">{{ bird.ssp|default:"Not available" }}</div>
+
+            <div class="col s5"><strong>Group:</strong></div>
+            <div class="col s7">{{ bird.group|default:"Not available" }}</div>
+
+            <div class="col s5"><strong>English Name:</strong></div>
+            <div class="col s7">{{ bird.en|default:"Not available" }}</div>
+
+            <div class="col s5"><strong>Recordist:</strong></div>
+            <div class="col s7">{{ bird.rec|default:"Not available" }}</div>
+
+            <div class="col s5"><strong>Country:</strong></div>
+            <div class="col s7">{{ bird.cnt|default:"Not available" }}</div>
+
+            <div class="col s5"><strong>Location:</strong></div>
+            <div class="col s7">{{ bird.loc|default:"Not available" }}</div>
+
+            <div class="col s5"><strong>Latitude:</strong></div>
+            <div class="col s7">{{ bird.lat|default:"Not available" }}</div>
+
+            <div class="col s5"><strong>Longitude:</strong></div>
+            <div class="col s7">{{ bird.lng|default:"Not available" }}</div>
+
+            <div class="col s5"><strong>Sound Type:</strong></div>
+            <div class="col s7">{{ bird.sound_type|default:"Not available" }}</div>
+
+            <div class="col s5"><strong>Sex:</strong></div>
+            <div class="col s7">{{ bird.sex|default:"Not available" }}</div>
+
+            <div class="col s5"><strong>Life Stage:</strong></div>
+            <div class="col s7">{{ bird.stage|default:"Not available" }}</div>
+        </div>
+
+        <div class="bird-image" style="background-image: url({{ bird.image.url }}); background-size: cover; background-position: center;"></div>
+
+        <div class="center-align">
+            <audio controls>
+                <source src="{{ bird.audio.url }}" type="audio/wav">
+            </audio>
+        </div>
+        <div class="center-align">
+            <a href="{% url 'bird_edit' pk=object.pk %}" class="waves-effect waves-light btn">Edit</a>
+            <a href="{% url 'bird_delete' pk=object.pk %}" class="waves-effect waves-light btn red">Delete</a>
+        </div>
+    </div>
+
 {% endblock %}

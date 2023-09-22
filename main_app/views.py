@@ -2,6 +2,8 @@ from django.shortcuts import render
 from .models import Bird
 from .api import fetch_bird_calls_from_xenocanto, fetch_image_from_inaturalist
 import requests
+from django.urls import reverse_lazy
+from django.views.generic import DetailView, UpdateView, DeleteView
 from django.views.decorators.cache import cache_page
 from django.shortcuts import render, redirect
 from .forms import BirdForm
@@ -21,7 +23,7 @@ def about(request):
   
   return render(request, 'about.html')
 
-@cache_page(60 * 15)
+# @cache_page(60 * 15)
 def birds_index(request):
     # Retrieve the first 10 birds from the database (you can adjust this as per your needs)
     birds = Bird.objects.all()
@@ -111,6 +113,24 @@ def save_file_from_url(model_field, url):
         save=True
     )
 
-def bird_detail(request, bird_id):
-    bird = get_object_or_404(Bird, id=bird_id)
-    return render(request, 'main_app/bird_detail.html', {'bird': bird})
+# def bird_detail(request, bird_id):
+#     bird = get_object_or_404(Bird, id=bird_id)
+#     return render(request, 'main_app/bird_detail.html', {'bird': bird})
+
+class BirdDetailView(DetailView):
+    model = Bird
+    template_name = "main_app/bird_detail.html"
+
+class BirdUpdateView(UpdateView):
+    model = Bird
+    template_name = "main_app/create_bird.html"
+    form_class = BirdForm
+    exclude = ['catalogue_number']
+
+    def get_success_url(self):
+        return reverse_lazy('bird_detail', kwargs={'pk': self.object.pk})
+    
+class BirdDeleteView(DeleteView):
+    model = Bird
+    template_name = "main_app/bird_confirm_delete.html"
+    success_url = reverse_lazy('birds_index')
